@@ -1,0 +1,41 @@
+{
+  "version": "5",
+  "dialect": "pg",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1686630614052,
+      "tag": "0000_tricky_iron_fist",
+      "breakpoints": false
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1686653578192,
+      "tag": "0001_massive_songbird",
+      "breakpoints": false
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1686654300677,
+      "tag": "0002_daily_saracen",
+      "breakpoints": false
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1686654602765,
+      "tag": "0003_next_giant_girl",
+      "breakpoints": false
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1686654673207,
+      "tag": "0004_odd_blindfold",
+      "breakpoints": false
+    }
+  ]
+}
