@@ -1,7 +1,7 @@
 //service for creating a user
 
-import { InferModel, eq } from "drizzle-orm";
-import { applications, users, usersToRoles } from "../../db/schema";
+import { InferModel, and, eq } from "drizzle-orm";
+import { applications, roles, users, usersToRoles } from "../../db/schema";
 import { db } from "../../db";
 import argon2 from "argon2";
 
@@ -39,4 +39,44 @@ export async function assignRoleToUser(data: InferModel<typeof usersToRoles,'ins
     const result = await db.insert(usersToRoles).values(data).returning();
 
     return result[0];
+}
+
+//service to get user by their email address
+export async function getUserByEmail({
+    email,
+    applicationId,
+}:{
+    email:string,
+    applicationId:string,
+}  ) {
+    //query to get the user by their email address
+    const result = await db.select().from(users).where(
+        and(
+            eq(users.email, email),
+            eq(users.applicationId, applicationId)
+        )//LEFT JOIN
+        //FROM usersToRoles
+        //ON usersToRoles.userId = users.id
+        //AND usersToRoles.applicationId = users.applicationId
+    ).leftJoin(usersToRoles,
+        and(
+            eq(usersToRoles.userId, users.id),
+            eq(usersToRoles.applicationId, applicationId)
+        )
+        //LEFT JOIN 
+        //FROM roles
+        //ON roles.id = usersToRoles.roleId
+    ).leftJoin(roles,
+        eq(roles.id, usersToRoles.roleId)
+        );  
+
+
+    //will get back multiple results if there are multiple roles for the user
+        //console.log(result);
+    if(!result.length){
+        return null;
+    }
+
+    
+    return result;  
 }

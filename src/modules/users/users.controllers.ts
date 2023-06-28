@@ -1,8 +1,9 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import { CreateUserBody } from "./users.schemas";
+import { CreateUserBody, LoginBody } from "./users.schemas";
 import { SYSTEM_ROLES } from "../../config/permissions";
 import { getRoleByName } from "../roles/roles.services";
-import { assignRoleToUser, createUser, getUsersByApplication } from "./users.services";
+import { assignRoleToUser, createUser, getUserByEmail, getUsersByApplication } from "./users.services";
+import jwt from "jsonwebtoken";
 
 export async function createUserHandler(
     request: FastifyRequest<{
@@ -54,4 +55,46 @@ export async function createUserHandler(
         }catch(e){
 
         }
+
+
 }
+
+
+export async function loginHandler(request: FastifyRequest<{
+  Body:LoginBody;
+}>
+, reply: FastifyReply) {
+  const { applicationId,email,password} = request.body;
+
+  const user = getUserByEmail({
+    applicationId,
+    email,
+  });
+  if(!user){
+    return reply.code(400).send({
+      message:'Invalid Email or Password'
+    })
+  }
+
+  //to check what this is returning we can write
+  return user;
+ // console.log(user);
+
+
+  //sign a token for the user
+  const token = jwt.sign({
+    //can put user's id, application-id, email, list of all permissions this user has 
+    email,
+    applicationId,
+  },"secret"); //change this secret or signing method or game over
+  //ideally the signing method will be rs256 means using a public and private key 
+  //todo ==> later
+
+
+
+  return {
+    token
+  }
+
+} 
+  
