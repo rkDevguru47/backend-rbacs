@@ -17,3 +17,4 @@
 // responseTime: 460.93899999931455  on running local server using PS on VScode before optimising
 // muliple awaits and calling singe await..
 // responseTime: 397.3292999975383 with improvements i.e. single await in controller
+// getappliations route -  responseTime: 1128.394200000912 initial from server and  responseTime: 105.1938000023365 when cached

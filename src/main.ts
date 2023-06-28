@@ -31,7 +31,7 @@ async function gracefulShutdown({ app, }: {
 
     logger.debug(env,"using env");
 
-   //dosent work in ps 7.1.4-preview
+    //--dosent work in ps 7.1.4-preview
     //loop to listen to thise signals
     for (const signal of signals) {
         process.on(signal, () => {
