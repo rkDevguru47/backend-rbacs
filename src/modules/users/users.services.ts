@@ -50,7 +50,15 @@ export async function getUserByEmail({
     applicationId:string,
 }  ) {
     //query to get the user by their email address
-    const result = await db.select().from(users).where(
+    const result = await db.select({
+        id:users.id,
+        email:users.email,
+        name:users.name,
+        applicationId:users.applicationId,
+        roleId:roles.id,
+        password:users.password,
+        permissions:roles.permissions,
+    }).from(users).where(
         and(
             eq(users.email, email),
             eq(users.applicationId, applicationId)
@@ -68,7 +76,7 @@ export async function getUserByEmail({
         //ON roles.id = usersToRoles.roleId
     ).leftJoin(roles,
         eq(roles.id, usersToRoles.roleId)
-        );  
+    );  
 
 
     //will get back multiple results if there are multiple roles for the user
@@ -76,7 +84,39 @@ export async function getUserByEmail({
     if(!result.length){
         return null;
     }
+                                //accumulator and current value
+    const user = result.reduce((acc, curr) => {
+        //check if accumulator has the id
+        if(!acc.id){
+            return{
+                //never do these mistakes ->
+                //using spread inside reduce
+                //and createing a new set inside of reduce is a big no no
+                //as every iteration of this could create a new object
+                //...curr,
+                //permissions: new Set(curr.permissions)
+                //what we should do is mutate the object
+                //but in this case we are only going to do this once so its not so bad
+                ...curr,
+                permissions: new Set(curr.permissions),
+            };
+        }
+        //no permissions means no need to append them to set
+        if(!curr.permissions){
+            return acc;
+        }
+        //else we look through those permissions and append them to the set
+        for(const permission of curr.permissions){
+            acc.permissions.add(permission);
+        }
+        
+        return acc;
+    },{} as Omit<(typeof result)[number], "permissions"> & { permissions: Set<string>});
 
-    
-    return result;  
+
+    return {
+        ...user,
+        //got all permissions from all user roles and merged it into a set and made a array of it
+        permissons: Array.from(user.permissions),
+    };   
 }

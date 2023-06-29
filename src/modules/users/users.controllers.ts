@@ -66,7 +66,7 @@ export async function loginHandler(request: FastifyRequest<{
 , reply: FastifyReply) {
   const { applicationId,email,password} = request.body;
 
-  const user = getUserByEmail({
+  const user = await getUserByEmail({
     applicationId,
     email,
   });
@@ -77,15 +77,19 @@ export async function loginHandler(request: FastifyRequest<{
   }
 
   //to check what this is returning we can write
-  return user;
+ //return user;
  // console.log(user);
 
 
+
+ //IMP-INFO to check the token we can go to jwt.io and paste it there
   //sign a token for the user
   const token = jwt.sign({
     //can put user's id, application-id, email, list of all permissions this user has 
+    id:user.id,
     email,
     applicationId,
+    scopes:user.permissions
   },"secret"); //change this secret or signing method or game over
   //ideally the signing method will be rs256 means using a public and private key 
   //todo ==> later
