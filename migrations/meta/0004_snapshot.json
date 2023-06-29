@@ -87,9 +87,7 @@
       "indexes": {
         "roles_id_index": {
           "name": "roles_id_index",
-          "columns": [
-            "id"
-          ],
+          "columns": ["id"],
           "isUnique": true
         }
       },
@@ -98,12 +96,8 @@
           "name": "roles_applicationId_applications_id_fk",
           "tableFrom": "roles",
           "tableTo": "applications",
-          "columnsFrom": [
-            "applicationId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["applicationId"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -111,10 +105,7 @@
       "compositePrimaryKeys": {
         "roles_name_applicationId": {
           "name": "roles_name_applicationId",
-          "columns": [
-            "name",
-            "applicationId"
-          ]
+          "columns": ["name", "applicationId"]
         }
       }
     },
@@ -171,9 +162,7 @@
       "indexes": {
         "users_id_index": {
           "name": "users_id_index",
-          "columns": [
-            "id"
-          ],
+          "columns": ["id"],
           "isUnique": true
         }
       },
@@ -182,12 +171,8 @@
           "name": "users_applicationId_applications_id_fk",
           "tableFrom": "users",
           "tableTo": "applications",
-          "columnsFrom": [
-            "applicationId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["applicationId"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -195,10 +180,7 @@
       "compositePrimaryKeys": {
         "users_email_applicationId": {
           "name": "users_email_applicationId",
-          "columns": [
-            "email",
-            "applicationId"
-          ]
+          "columns": ["email", "applicationId"]
         }
       }
     },
@@ -231,12 +213,8 @@
           "name": "usersToRoles_applicationId_applications_id_fk",
           "tableFrom": "usersToRoles",
           "tableTo": "applications",
-          "columnsFrom": [
-            "applicationId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["applicationId"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -244,12 +222,8 @@
           "name": "usersToRoles_roleId_roles_id_fk",
           "tableFrom": "usersToRoles",
           "tableTo": "roles",
-          "columnsFrom": [
-            "roleId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["roleId"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -257,12 +231,8 @@
           "name": "usersToRoles_userId_users_id_fk",
           "tableFrom": "usersToRoles",
           "tableTo": "users",
-          "columnsFrom": [
-            "userId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["userId"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -270,11 +240,7 @@
       "compositePrimaryKeys": {
         "usersToRoles_applicationId_roleId_userId": {
           "name": "usersToRoles_applicationId_roleId_userId",
-          "columns": [
-            "applicationId",
-            "roleId",
-            "userId"
-          ]
+          "columns": ["applicationId", "roleId", "userId"]
         }
       }
     }
