@@ -9,7 +9,11 @@ export async function createRoleHandler(
   }>,
   reply: FastifyReply
 ) {
-  const { name, permissions, applicationId } = request.body;
+    //to guard against unauthorised access by injection of application ids
+    const user = request.user;
+    const applicationId = user.applicationId;
+
+  const { name, permissions } = request.body;
 
   const role = await createRole({ name, permissions, applicationId });
 

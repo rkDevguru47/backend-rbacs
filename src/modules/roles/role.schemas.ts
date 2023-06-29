@@ -5,7 +5,8 @@ import zodToJsonSchema from "zod-to-json-schema";
 const createRoleBodySchema = z.object({
   name: z.string(),
   permissions: z.array(z.enum(ALL_PERMISSIONS)),
-  applicationId: z.string().uuid(),
+  //to guard against application id being passed in randomly to make changes 
+  //applicationId: z.string().uuid(),
 });
 
 export type CreateRoleBody = z.infer<typeof createRoleBodySchema>;
